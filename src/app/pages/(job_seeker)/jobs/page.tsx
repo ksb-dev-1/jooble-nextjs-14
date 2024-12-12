@@ -26,7 +26,7 @@ interface JobsPageProps {
 export default async function JobsPage({ searchParams }: JobsPageProps) {
   const { search, jobType, location, jobMode, page } = await searchParams;
   const session = await auth();
-  const user = session?.user?.id;
+  const userID = session?.user?.id;
   const isJobSeeker = session?.user?.role === UserRole.JOB_SEEKER;
 
   // Unauthorized Access Message
@@ -44,7 +44,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
     </div>
   );
 
-  if (!user) {
+  if (!userID) {
     return <UnauthorizedMessage message="Sign in to access this page." />;
   }
 

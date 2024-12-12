@@ -14,7 +14,6 @@ export default async function JobsList({ filterValues }: JobsListProps) {
   try {
     // Call the server action directly
     const data = await fetchJobsAction({
-      userID: "user_id_placeholder", // Replace with actual userID if available
       search: filterValues.search,
       jobType: filterValues.jobType,
       location: filterValues.location,

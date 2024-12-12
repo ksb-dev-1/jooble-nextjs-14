@@ -2,7 +2,6 @@ import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 
 interface FetchJobsProps {
-  userID: string;
   search?: string;
   jobType?: string;
   location?: string;
@@ -12,7 +11,6 @@ interface FetchJobsProps {
 }
 
 export default async function fetchJobsAction({
-  userID,
   search,
   jobType,
   location,
@@ -20,10 +18,6 @@ export default async function fetchJobsAction({
   page = 1,
   limit = 2,
 }: FetchJobsProps) {
-  if (!userID) {
-    throw new Error("User not authenticated");
-  }
-
   const offset = (page - 1) * limit;
 
   const whereClause: Prisma.JobWhereInput = {
