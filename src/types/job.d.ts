@@ -10,7 +10,6 @@ interface Job {
   salary: number;
   skills: string[];
   openings: number;
-  applications: number;
   description?: string | null;
   createdAt: Date;
   updatedAt: Date;

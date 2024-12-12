@@ -1,48 +1,10 @@
 import { JobFilterValues } from "@/lib/validation";
-
-// components
 import JobCard from "@/components/job_seeker/JobCard";
 import Pagination from "@/components/job_seeker/Pagination";
-
-// 3rd party
-import { auth } from "@/auth";
+import fetchJobsAction from "@/actions/fetchJobsAction"; // Use server action here
 
 interface JobsListProps {
   filterValues: JobFilterValues;
-}
-
-export async function fetchJobs(filterValues: JobFilterValues) {
-  const session = await auth();
-  const userID = session?.user.id;
-
-  const { search, jobType, location, jobMode, page } = filterValues;
-
-  const queryParams = new URLSearchParams({
-    ...(search && { search }),
-    ...(jobType && { jobType }),
-    ...(location && { location }),
-    ...(jobMode && { jobMode }),
-    ...(page && { page }),
-    limit: "5",
-  });
-
-  const response = await fetch(
-    `${
-      process.env.NEXT_PUBLIC_BASE_URL
-    }/api/jobs?${queryParams.toString()}&userID=${userID}`,
-    {
-      next: {
-        tags: ["jobs"],
-      },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch jobs");
-  }
-
-  const data = await response.json();
-  return data;
 }
 
 export default async function JobsList({ filterValues }: JobsListProps) {
@@ -50,7 +12,16 @@ export default async function JobsList({ filterValues }: JobsListProps) {
   let totalPages: number = 1;
 
   try {
-    const data = await fetchJobs(filterValues);
+    // Call the server action directly
+    const data = await fetchJobsAction({
+      userID: "user_id_placeholder", // Replace with actual userID if available
+      search: filterValues.search,
+      jobType: filterValues.jobType,
+      location: filterValues.location,
+      jobMode: filterValues.jobMode,
+      page: Number(filterValues.page || 1),
+      limit: 5,
+    });
     jobs = data.jobs;
     totalPages = data.totalPages;
   } catch (error) {
