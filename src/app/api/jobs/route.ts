@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
+  const userID = searchParams.get("userID");
   const search = searchParams.get("search")?.toLowerCase() || undefined;
   const jobType = searchParams.get("jobType") || undefined;
   const location = searchParams.get("location") || undefined;
@@ -11,6 +12,13 @@ export async function GET(request: NextRequest) {
   const page = parseInt(searchParams.get("page") || "1", 10);
   const limit = parseInt(searchParams.get("limit") || "2", 10);
   const offset = (page - 1) * limit;
+
+  if (!userID) {
+    return NextResponse.json(
+      { error: "User not authenticated" },
+      { status: 401 }
+    );
+  }
 
   const whereClause: Prisma.JobWhereInput = {
     ...(search && {

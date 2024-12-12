@@ -4,11 +4,17 @@ import { JobFilterValues } from "@/lib/validation";
 import JobCard from "@/components/job_seeker/JobCard";
 import Pagination from "@/components/job_seeker/Pagination";
 
+// 3rd party
+import { auth } from "@/auth";
+
 interface JobsListProps {
   filterValues: JobFilterValues;
 }
 
 export async function fetchJobs(filterValues: JobFilterValues) {
+  const session = await auth();
+  const userID = session?.user.id;
+
   const { search, jobType, location, jobMode, page } = filterValues;
 
   const queryParams = new URLSearchParams({
@@ -21,7 +27,9 @@ export async function fetchJobs(filterValues: JobFilterValues) {
   });
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs?${queryParams.toString()}`,
+    `${
+      process.env.NEXT_PUBLIC_BASE_URL
+    }/api/jobs?${queryParams.toString()}&userID=${userID}`,
     {
       next: {
         tags: ["jobs"],

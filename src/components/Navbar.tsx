@@ -125,14 +125,11 @@ const Navbar = () => {
                   <Link href="/pages/jobs" className="ml-8 font-semibold">
                     Jobs
                   </Link>
-                  <Link
-                    href="/pages/jobs/saved-jobs"
-                    className="ml-8 font-semibold"
-                  >
+                  <Link href="/pages/saved-jobs" className="ml-8 font-semibold">
                     Saved
                   </Link>
                   <Link
-                    href="/pages/jobs/applied-jobs"
+                    href="/pages/applied-jobs"
                     className="ml-8 font-semibold"
                   >
                     Applied

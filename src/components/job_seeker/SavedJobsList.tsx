@@ -14,7 +14,7 @@ export default async function SavedJobs() {
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs/saved-jobs?userID=${userID}`,
       {
         next: {
-          tags: ["jobs"],
+          tags: ["saved-jobs"],
         },
       }
     );

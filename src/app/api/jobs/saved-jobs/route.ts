@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 // lib
 import { prisma } from "@/lib/prisma";
 
-export async function GET(req: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const userID = req.nextUrl.searchParams.get("userID");
+    const userID = request.nextUrl.searchParams.get("userID");
 
     if (!userID) {
       return NextResponse.json(
