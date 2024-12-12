@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #f1f5f9;
+  /* background: #ede9fe; */
+  overflow-x: hidden;
+}
+
+.accenture-icon {
+  color: #a100ff;
+}
+.infosys-icon {
+  color: #0271b1;
+}
+.swiggy-icon {
+  color: #f77217;
+}
+.wipro-icon {
+  color: #351a55;
+}
+.atlassian-icon {
+  color: #1868db;
+}
+.netflix-icon {
+  color: #e50914;
+}
+.microsoft-icon {
+  color: #08a1f7;
+}
+.spotify-icon {
+  color: #1ed760;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f7f7f7 25%, #ececec 50%, #f7f7f7 75%);
+  /* background: linear-gradient(90deg, #e0e7ff 25%, #cbd5e1 50%, #e0e7ff 75%); */
+  background: linear-gradient(90deg, #e5e7eb 25%, #d1d5db 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.loader {
+  border: 3px solid;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

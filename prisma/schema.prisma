@@ -1,0 +1,102 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  JOB_SEEKER
+  RECRUITER
+  NOT_ASSIGNED
+}
+
+model User {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId // MongoDB uses ObjectId by default
+  name          String?
+  email         String     @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  role          UserRole   @default(NOT_ASSIGNED)
+  savedJobs     SavedJob[] @relation("UserSavedJobs")
+  postedJobs    Job[]      @relation("UserPostedJobs")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Job {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  companyLogo  String?
+  companyName  String
+  experience   String
+  role         String
+  jobType      String
+  location     String
+  jobMode      String
+  salary       Int
+  skills       String[]
+  openings     Int
+  description  String?
+  savedByUsers SavedJob[] @relation("JobSavedByUsers")
+  postedBy     User       @relation("UserPostedJobs", fields: [postedById], references: [id], onDelete: Cascade)
+  postedById   String     @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SavedJob {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user      User     @relation("UserSavedJobs", fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @db.ObjectId
+  job       Job?     @relation("JobSavedByUsers", fields: [jobId], references: [id], onDelete: Cascade)
+  jobId     String   @db.ObjectId
+  createdAt DateTime @default(now())
+}
