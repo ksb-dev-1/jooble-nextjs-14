@@ -11,12 +11,12 @@ import { UserRole } from "@prisma/client";
 
 export default async function SavedJobsPage() {
   const session = await auth();
-  const user = session?.user.id;
+  const userID = session?.user.id;
   const role = session?.user.role === UserRole.JOB_SEEKER;
 
   let isAccessible: React.ReactNode;
 
-  if (!user) {
+  if (!userID) {
     isAccessible = (
       <div className="bg-red-100 text-red-600 flex items-center justify-center shadow-md p-8">
         <div>Sign in to access this page.</div>
@@ -38,9 +38,9 @@ export default async function SavedJobsPage() {
     <div className="min-h-[calc(100vh-88px)] pt-[calc(72px+4rem)] pb-[4rem] flex justify-center">
       <div className="relative max-w-5xl w-full px-4 flex flex-col">
         {isAccessible}
-        {user && role ? (
+        {userID && role ? (
           <Suspense fallback={<SavedJobsSkeleton />}>
-            <SavedJobsList />
+            <SavedJobsList userID={userID} />
           </Suspense>
         ) : (
           ""

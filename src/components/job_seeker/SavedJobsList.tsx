@@ -1,30 +1,18 @@
+// actions
+import fetchSavedJobsAction from "@/actions/fetchSavedJobsAction";
+
+// components
 import JobCard from "@/components/job_seeker/JobCard";
-import { auth } from "@/auth";
 
-export default async function SavedJobs() {
-  const session = await auth();
-  const userID = session?.user.id;
-
-  //console.log(userID);
-
+export default async function SavedJobs({ userID }: { userID: string }) {
   let jobs = [];
 
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs/saved-jobs?userID=${userID}`,
-      {
-        next: {
-          tags: ["saved-jobs"],
-        },
-      }
-    );
+    // Call the server action to fetch saved jobs
+    const savedJobs = await fetchSavedJobsAction(userID);
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch jobs");
-    }
-
-    const data = await response.json();
-    jobs = data.map((savedJob: { job: Job }) => savedJob.job);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    jobs = savedJobs.map((savedJob: any) => savedJob.job);
   } catch (error) {
     console.error("Error fetching jobs:", error);
   }

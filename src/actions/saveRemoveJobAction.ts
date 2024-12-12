@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 async function saveRemoveJobAction(jobID: string) {
   const session = await auth();
@@ -41,8 +41,8 @@ async function saveRemoveJobAction(jobID: string) {
     message = "Job added to bookmarks.";
   }
 
-  revalidateTag("saved-jobs");
-  revalidateTag("jobs");
+  revalidatePath("/pages/saved-jobs", "page");
+  revalidatePath("/pages/jobs", "page");
   // Return the appropriate message and the new bookmark status
   return { message, isBookmarked: !isBookmarked };
 }

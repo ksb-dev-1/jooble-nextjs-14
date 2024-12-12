@@ -12,7 +12,6 @@ export default async function JobsList({ filterValues }: JobsListProps) {
   let totalPages: number = 1;
 
   try {
-    // Call the server action directly
     const data = await fetchJobsAction({
       search: filterValues.search,
       jobType: filterValues.jobType,

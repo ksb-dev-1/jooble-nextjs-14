@@ -1,8 +1,9 @@
-import { redirect } from "next/navigation";
+/// actions
+import getDistinctLocationsAction from "@/actions/getDistinctLocationsAction";
+import filterJobsAction from "@/actions/filterJobsAction";
 
 // lib
-import { prisma } from "@/lib/prisma";
-import { jobFilterSchema, JobFilterValues } from "@/lib/validation";
+import { JobFilterValues } from "@/lib/validation";
 import { JOB_MODES, JOB_TYPES } from "@/lib/constants";
 
 // components
@@ -14,36 +15,12 @@ interface JobFilterProps {
   defaultValues: JobFilterValues;
 }
 
-async function filterJobs(formData: FormData) {
-  "use server";
-
-  const values = Object.fromEntries(formData.entries());
-
-  const { search, jobType, location, jobMode } = jobFilterSchema.parse(values);
-
-  const searchParams = new URLSearchParams({
-    ...(search && { search: search.trim() }),
-    ...(jobType && { jobType }),
-    ...(location && { location }),
-    ...(jobMode && { jobMode }),
-  });
-
-  redirect(`/pages/jobs/?${searchParams.toString()}`);
-}
-
 export default async function JobsFilterServer({
   defaultValues,
 }: JobFilterProps) {
-  const distinctLocations = (await prisma.job
-    .findMany({
-      select: { location: true },
-      distinct: ["location"],
-    })
-    .then((locations) =>
-      locations.map(({ location }) => location)
-    )) as string[];
+  const distinctLocations = await getDistinctLocationsAction();
 
-  const isFilter =
+  const isFilterApplied =
     defaultValues.search ||
     defaultValues.jobType ||
     defaultValues.location ||
@@ -51,7 +28,7 @@ export default async function JobsFilterServer({
 
   return (
     <div className="bg-white shadow-md rounded p-4 mr-4 hidden md:block w-[400px]">
-      <form action={filterJobs} key={JSON.stringify(defaultValues)}>
+      <form action={filterJobsAction} key={JSON.stringify(defaultValues)}>
         <div className="flex flex-col gap-2">
           <label htmlFor="search" className="font-medium">
             Search
@@ -129,7 +106,7 @@ export default async function JobsFilterServer({
           Filter jobs
         </FilterJobsButton>
       </form>
-      {isFilter && <ClearFilters />}
+      {isFilterApplied && <ClearFilters />}
     </div>
   );
 }

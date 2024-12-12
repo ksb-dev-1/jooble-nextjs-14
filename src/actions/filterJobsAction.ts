@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 // lib
 import { jobFilterSchema } from "@/lib/validation";
 
-async function filterJobs(formData: FormData) {
+export default async function filterJobsAction(formData: FormData) {
   const values = Object.fromEntries(formData.entries());
 
   const { search, jobType, location, jobMode } = jobFilterSchema.parse(values);
@@ -19,5 +19,3 @@ async function filterJobs(formData: FormData) {
 
   redirect(`/pages/jobs/?${searchParams.toString()}`);
 }
-
-export default filterJobs;

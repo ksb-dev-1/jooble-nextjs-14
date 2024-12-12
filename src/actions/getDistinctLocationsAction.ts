@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-async function getDistinctLocations(): Promise<string[]> {
+export default async function getDistinctLocationsAction(): Promise<string[]> {
   try {
     const locations = await prisma.job.findMany({
       select: { location: true },
@@ -12,5 +12,3 @@ async function getDistinctLocations(): Promise<string[]> {
     throw new Error("Failed to fetch distinct locations");
   }
 }
-
-export default getDistinctLocations;
