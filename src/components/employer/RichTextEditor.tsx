@@ -26,7 +26,7 @@ const RichTextEditor = forwardRef<object, EditorProps>(function RichTextEditor(
   return (
     <div className="rich-text-editor">
       <Editor
-        editorClassName={`border rounded px-3 min-h-[150px] cursor-text border-slate-300  focus-within:outline-none focus-within:outline-violet-300`}
+        editorClassName={`border rounded-xl px-3 min-h-[150px] cursor-text border-slate-300  focus-within:outline-none focus-within:outline-violet-300`}
         toolbar={{
           options: ["inline", "list", "link", "history"],
           inline: {

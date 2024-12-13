@@ -29,7 +29,7 @@ async function saveRemoveJobAction(jobID: string) {
         id: isBookmarked.id,
       },
     });
-    message = "Job removed from bookmarks.";
+    message = "Job removed successfully";
   } else {
     // If the job is not bookmarked, add it
     await prisma.savedJob.create({
@@ -38,7 +38,7 @@ async function saveRemoveJobAction(jobID: string) {
         userId: session.user.id,
       },
     });
-    message = "Job added to bookmarks.";
+    message = "Job saved successfully";
   }
 
   revalidatePath("/pages/saved-jobs", "page");

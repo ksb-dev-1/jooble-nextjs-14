@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
+
+// hooks
+import { useCurrentUserSession } from "@/hooks/useCurrentUserSession";
+
+// 3rd party
 import { UserRole } from "@prisma/client";
-import { useSession } from "next-auth/react";
 
 export default function Heading() {
-  const session = useSession();
+  const { userID, userRole } = useCurrentUserSession();
 
   return (
     <div className="h-screen w-screen z-10 flex flex-col items-center justify-center">
@@ -17,13 +21,13 @@ export default function Heading() {
       </p>
       <Link
         href={`${
-          !session.data?.user.id
+          !userID
             ? "/pages/signin"
-            : session.data?.user.role === UserRole.JOB_SEEKER
+            : userRole === UserRole.JOB_SEEKER
             ? "/pages/jobs-tanstack-query"
-            : session.data?.user.role === UserRole.RECRUITER
+            : userRole === UserRole.EMPLOYER
             ? "/pages/post-job"
-            : session.data?.user.role === UserRole.NOT_ASSIGNED
+            : userRole === UserRole.NOT_ASSIGNED
             ? "/pages/select-role"
             : ""
         }`}

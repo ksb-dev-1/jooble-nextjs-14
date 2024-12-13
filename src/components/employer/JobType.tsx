@@ -24,7 +24,7 @@ export default function JobType({ register, error }: JobTypeProps) {
       <Select
         id="jobType"
         {...register("jobType")}
-        className="border border-slate-300 rounded"
+        className="border border-slate-300 rounded-xl"
       >
         {JOB_TYPES.map((type) => (
           <option key={type} value={type}>

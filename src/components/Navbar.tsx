@@ -9,8 +9,10 @@ import { useHandleOutsideClick } from "@/hooks/useHandleOutsideClick";
 import { useHeaderShadowOnScroll } from "@/hooks/useHeaderShadowOnScroll";
 
 // 3rd party
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { FaCircleUser } from "react-icons/fa6";
+import { useCurrentUserSession } from "@/hooks/useCurrentUserSession";
+import { UserRole } from "@prisma/client";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -18,10 +20,8 @@ const Navbar = () => {
   const navbarRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const { data: session, status, update } = useSession();
-  const user = session?.user;
-  const role = user?.role;
-  const image = user?.image;
+  const { userID, userRole, sessionStatus, userImage, update } =
+    useCurrentUserSession();
 
   useHeaderShadowOnScroll(navbarRef);
   useHandleOutsideClick(dropdownRef, setIsDropdownOpen);
@@ -50,13 +50,13 @@ const Navbar = () => {
 
   const avatar = (
     <div ref={dropdownRef} className="relative">
-      {image ? (
+      {userImage ? (
         <div
           className="relative h-[40px] w-[40px] rounded-full ml-8 cursor-pointer bg-slate-300"
           onClick={() => setIsDropdownOpen((prev) => !prev)}
         >
           <Image
-            src={image}
+            src={userImage}
             alt="User Avatar"
             fill
             priority
@@ -74,16 +74,27 @@ const Navbar = () => {
       )}
 
       <div
-        className={`absolute mt-2 w-[170px] flex flex-col shadow-md rounded border border-slate-300 p-2 bg-white origin-top-right right-0 ${
+        className={`absolute mt-2 w-[170px] flex flex-col shadow-md rounded-xl border border-slate-300 p-2 bg-white origin-top-right right-0 ${
           isDropdownOpen ? "scale-100 opacity-1" : "scale-0 opacity-0"
         } shadow-md transition`}
       >
+        <Link
+          href={
+            userRole === UserRole.JOB_SEEKER
+              ? "/pages/job-seeker-profile"
+              : "/pages/employer-profile"
+          }
+          onClick={() => setIsDropdownOpen((prev) => !prev)}
+          className="px-4 py-2 w-full rounded-xl text-start hover:bg-slate-100 transition"
+        >
+          Profile
+        </Link>
         <button
           onClick={() => {
             signOut().then(() => update());
             setIsDropdownOpen((prev) => !prev);
           }}
-          className="px-4 py-2 w-full rounded text-start hover:bg-slate-100 transition"
+          className="px-4 py-2 w-full rounded-xl text-start hover:bg-slate-100 transition"
         >
           Sign out
         </button>
@@ -101,51 +112,45 @@ const Navbar = () => {
           J
           <span className="relative inline-block h-6 w-6 rounded-full bg-violet-600 mr-[1px]">
             <span className="absolute top-1/2 left-1/2 -translate-x-[36%] -translate-y-1/2 h-[14px] w-[14px] bg-white rounded-full">
-              <span className="absolute top-1/2 left-1/2 -translate-x-[30%] -translate-y-1/2 h-[7px] w-[7px] bg-gradient-to-t from-black to-[#bababa] rounded-full">
-                {/* <span className="absolute top-1/2 left-1/2 -translate-x-[0%] -translate-y-1/2 h-[3px] w-[3px] bg-white rounded-full"></span> */}
-              </span>
+              <span className="absolute top-1/2 left-1/2 -translate-x-[30%] -translate-y-1/2 h-[7px] w-[7px] bg-gradient-to-t from-black to-[#bababa] rounded-full"></span>
             </span>
           </span>
           <span className="relative inline-block h-5 w-5 rounded-full bg-violet-600 mr-[0.5px]">
             <span className="absolute top-1/2 left-1/2 -translate-x-[60%] -translate-y-1/2 h-3 w-3 bg-white rounded-full">
-              <span className="absolute top-1/2 left-1/2 -translate-x-[60%] -translate-y-1/4 h-[6px] w-[6px] bg-gradient-to-t from-black to-[#bababa] rounded-full">
-                {/* <span className="absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-1/6 h-[3px] w-[3px] bg-white rounded-full"></span> */}
-              </span>
+              <span className="absolute top-1/2 left-1/2 -translate-x-[60%] -translate-y-1/4 h-[6px] w-[6px] bg-gradient-to-t from-black to-[#bababa] rounded-full"></span>
             </span>
           </span>
           ble
         </Link>
+
         <div>
-          {status === "loading" ? (
+          {sessionStatus === "loading" ? (
             authLoading
           ) : (
             <div className="flex items-center">
-              {role === "JOB_SEEKER" && (
+              {userRole === UserRole.JOB_SEEKER && (
                 <>
-                  <Link href="/pages/jobs" className="ml-8 font-semibold">
+                  <Link href="/pages/jobs" className="ml-8">
                     Jobs
                   </Link>
-                  <Link href="/pages/saved-jobs" className="ml-8 font-semibold">
+                  <Link href="/pages/saved-jobs" className="ml-8">
                     Saved
                   </Link>
-                  <Link
-                    href="/pages/applied-jobs"
-                    className="ml-8 font-semibold"
-                  >
+                  <Link href="/pages/applied-jobs" className="ml-8">
                     Applied
                   </Link>
                 </>
               )}
 
-              {role === "RECRUITER" && (
-                <Link href="/pages/post-job" className="ml-8 font-semibold">
+              {userRole === UserRole.EMPLOYER && (
+                <Link href="/pages/post-job" className="ml-8">
                   Post Job
                 </Link>
               )}
 
-              {user && avatar}
+              {userID && avatar}
 
-              {!user && (
+              {!userID && (
                 <Link
                   href="/pages/signin"
                   className="px-5 py-2 bg-black text-white hover:bg-[#333] transition rounded-[50px]"

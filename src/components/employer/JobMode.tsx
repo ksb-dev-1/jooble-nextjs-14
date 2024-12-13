@@ -24,7 +24,7 @@ export default function JobMode({ register, error }: JobModeProps) {
       <Select
         id="jobMode"
         {...register("jobMode")}
-        className="border border-slate-300 rounded"
+        className="border border-slate-300 rounded-xl"
       >
         {JOB_MODES.map((mode) => (
           <option key={mode} value={mode}>

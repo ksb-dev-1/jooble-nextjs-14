@@ -11,8 +11,8 @@ export default function FilterJobsButton(
   return (
     <button {...props} type="submit" disabled={props.disabled || pending}>
       <span className="flex items-center justify-center gap-1 h-[41.6px] rounded">
-        {pending && <Loader2 size={16} className="animate-spin" />}
-        {!pending && props.children}
+        {props.children}
+        {pending && <Loader2 size={24} className="ml-2 animate-spin" />}
       </span>
     </button>
   );

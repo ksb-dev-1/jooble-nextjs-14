@@ -6,38 +6,39 @@ import { useRouter } from "next/navigation";
 // actions
 import { selectRoleAction } from "@/actions/selectRoleAction";
 
+// hooks
+import { useCurrentUserSession } from "@/hooks/useCurrentUserSession";
+
 // 3rd party libraries
 import { UserRole } from "@prisma/client";
-import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
 export default function Options() {
   const [role, setRole] = useState<string>("Job seeker");
-  const router = useRouter();
-  const { update, data: session, status } = useSession();
-  const user = session?.user.id;
-  const userRole = session?.user.role;
   const [isPending, startTransition] = useTransition();
 
+  const router = useRouter();
+
+  const { userID, userRole, sessionStatus, update } = useCurrentUserSession();
+
   useEffect(() => {
-    if (!user && status !== "loading") {
+    if (!userID && sessionStatus !== "loading") {
       router.push("/pages/signin");
     }
     if (userRole === UserRole.JOB_SEEKER) {
       router.push("/pages/jobs");
     }
-
-    if (userRole === UserRole.RECRUITER) {
+    if (userRole === UserRole.EMPLOYER) {
       router.push("/pages/post-job");
     }
-  }, [user, userRole, status, router]);
+  }, [userID, userRole, sessionStatus, router]);
 
   const assignRole = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     startTransition(async () => {
       try {
         const roleToAssign: UserRole =
-          role === "Job seeker" ? UserRole.JOB_SEEKER : UserRole.RECRUITER;
+          role === "Job seeker" ? UserRole.JOB_SEEKER : UserRole.EMPLOYER;
         const response = await selectRoleAction(roleToAssign);
 
         if (response.success) {
@@ -82,7 +83,7 @@ export default function Options() {
               type="button"
               onClick={() => {
                 if (!isPending) {
-                  setRole("Recruiter");
+                  setRole("Employer");
                 }
               }}
               // className={`absolute top-2 right-2 bottom-2 rounded-[50px] px-8 py-4 font-semibold text-lg flex items-center justify-center w-[50%] sm:w-fit ${
@@ -90,7 +91,7 @@ export default function Options() {
               // }`}
               className="absolute top-2 right-2 bottom-2 w-[50%] sm:w-[150px] rounded-[50px] px-8 py-4 font-semibold text-lg flex items-center justify-center hover:bg-slate-100"
             >
-              Recruiter
+              Employer
             </button>
             <div
               className={`z-10 absolute top-2 w-[50%] sm:w-[150px] flex items-center justify-center text-lg ${

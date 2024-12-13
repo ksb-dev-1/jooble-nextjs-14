@@ -75,7 +75,7 @@ const SkillsInput = ({
           placeholder="Enter skills one by one"
           value={skill}
           onChange={(e) => setSkill(e.target.value)}
-          className={`mt-2 px-3 py-2 rounded border ${
+          className={`mt-2 px-3 py-2 rounded-xl border ${
             error ? "border-red-500" : "border-slate-300"
           } focus-within:outline-none focus-within:outline-violet-300`}
         />
@@ -83,7 +83,7 @@ const SkillsInput = ({
           type="button"
           onClick={handleSubmit}
           disabled={!skill.trim()}
-          className={`absolute right-[0.5px] top-[33px] px-4 py-2 rounded-tr rounded-br ${
+          className={`absolute right-[0.5px] top-[33px] px-4 py-2 rounded-tr-xl rounded-br-xl ${
             skill.trim()
               ? "bg-violet-500 text-white hover:bg-violet-600"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
@@ -99,13 +99,13 @@ const SkillsInput = ({
           {skills.map((skill, index) => (
             <div
               key={index}
-              className="relative flex items-center mr-2 pl-3 pr-9 h-[41.6px] border border-slate-300 rounded"
+              className="relative flex items-center mr-2 pl-3 pr-9 h-[41.6px] border border-slate-300 rounded-xl"
             >
               <span className="mr-2">{skill}</span>
               <button
                 type="button"
                 onClick={() => removeSkill(skill)}
-                className="absolute right-1 h-[32.6px] w-[32.6px] rounded bg-red-100 hover:bg-red-200 transition-colors"
+                className="absolute right-1 h-[32.6px] w-[32.6px] rounded-[50px] bg-red-100 hover:bg-red-200 transition-colors"
               >
                 <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-red-600">
                   <IoClose className="text-xl" />

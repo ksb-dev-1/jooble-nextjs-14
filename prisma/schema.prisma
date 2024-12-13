@@ -9,7 +9,7 @@ generator client {
 
 enum UserRole {
   JOB_SEEKER
-  RECRUITER
+  EMPLOYER
   NOT_ASSIGNED
 }
 

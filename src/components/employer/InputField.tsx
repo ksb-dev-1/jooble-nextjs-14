@@ -29,7 +29,7 @@ const InputField = ({
         id={htmlFor}
         type={inputType}
         placeholder={placeholder}
-        className={`mt-2 px-3 py-2 border rounded ${
+        className={`mt-2 px-3 py-2 border rounded-xl ${
           error ? "border-red-500" : "border-slate-300"
         } focus-within:outline-none focus-within:outline-violet-300 `}
       />

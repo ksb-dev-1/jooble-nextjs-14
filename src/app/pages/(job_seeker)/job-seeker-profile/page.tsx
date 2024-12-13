@@ -8,14 +8,10 @@ import { getUserIdServer, getIsJobSeekerServer } from "@/lib/user";
 import UnauthorizedAccess from "@/components/UnauthorizedAccess";
 
 export const metadata: Metadata = {
-  title: "Jooble | Job details",
+  title: "Jooble | Profile",
 };
 
-export default async function JobDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function AppliedJobsPage() {
   const userID = await getUserIdServer();
   const isJobSeeker = await getIsJobSeekerServer();
 
@@ -29,12 +25,10 @@ export default async function JobDetailPage({
     );
   }
 
-  const id = (await params).id;
-
   return (
     <div className="min-h-screen pt-[calc(72px+4rem)] pb-[4rem] flex justify-center">
       <div className="relative max-w-5xl w-full px-4 flex flex-col">
-        <Suspense fallback={<div>Loading...</div>}>{id}</Suspense>
+        <Suspense fallback={<div>Loading...</div>}>Job seeker profile</Suspense>
       </div>
     </div>
   );

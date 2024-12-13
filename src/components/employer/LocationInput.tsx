@@ -68,7 +68,7 @@ const LocationInputNew = ({
         }}
         onFocus={() => setHasFocus(true)}
         onBlur={() => setHasFocus(false)}
-        className={`mt-2 px-3 py-2 rounded border ${
+        className={`mt-2 px-3 py-2 rounded-xl border ${
           error ? "border-red-500" : "border-slate-300"
         } focus-within:outline-none focus-within:outline-violet-300`}
       />

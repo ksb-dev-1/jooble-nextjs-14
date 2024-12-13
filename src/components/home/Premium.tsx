@@ -8,7 +8,7 @@ const Premium = () => {
     <div className="max-w-5xl w-full pt-[4rem] md:pt-[8rem] py-[2rem] md:py-[4rem] px-4">
       <div>
         <p className="text-xl font-bold mb-4">Premium services</p>
-        <div className="bg-white shadow-md rounded flex flex-col lg:flex-row items-center lg:justify-between px-2 py-4 sm:px-8 sm:py-8">
+        <div className="bg-white shadow-md rounded-xl flex flex-col lg:flex-row items-center lg:justify-between px-2 py-4 sm:px-8 sm:py-8">
           <div className="flex flex-col lg:flex-row items-center">
             <div className="relative h-[150px] w-[150px] sm:h-[175px] sm:w-[175px] rounded-full">
               <Image

@@ -42,7 +42,11 @@ const Pagination = ({ totalPages }: any) => {
         aria-label="previous"
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="relative bg-violet-600 text-white h-10 w-10 rounded-full hover:bg-violet-500 transition"
+        className={`relative text-white h-10 w-10 rounded-full ${
+          currentPage === 1
+            ? "bg-violet-300 cursor-not-allowed"
+            : "bg-violet-600 hover:bg-violet-700"
+        } transition`}
       >
         <GrFormPrevious className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl" />
       </button>
@@ -63,7 +67,7 @@ const Pagination = ({ totalPages }: any) => {
           <button
             aria-label="go to page"
             type="submit"
-            className="bg-violet-600 text-white px-4 py-2 rounded"
+            className="bg-violet-600 hover:bg-violet-700 transition text-white px-4 py-2 rounded"
           >
             Go
           </button>
@@ -73,7 +77,7 @@ const Pagination = ({ totalPages }: any) => {
         aria-label="next"
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="relative bg-violet-600 text-white h-10 w-10 rounded-full hover:bg-violet-500 transition"
+        className="relative bg-violet-600 text-white h-10 w-10 rounded-full hover:bg-violet-700 transition"
       >
         <GrFormNext className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl" />
       </button>

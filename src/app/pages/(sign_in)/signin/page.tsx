@@ -1,48 +1,73 @@
 "use client";
 
 import { useEffect } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 // actions
 import { githubSigninAction, googleSigninAction } from "@/actions/authActions";
+
+// hooks
+import { useCurrentUserSession } from "@/hooks/useCurrentUserSession";
 
 // components
 import GoogleSigninButton from "@/components/signin/GoogleSigninButton";
 import GithubSigninButton from "@/components/signin/GithubSigninButton";
 
 // 3rd party
-import { useSession } from "next-auth/react";
 import { UserRole } from "@prisma/client";
 
-const SigninPage = () => {
-  const { data: session, status } = useSession();
-  const role = session?.user.role;
+export default function SigninPage() {
+  const { userRole, sessionStatus } = useCurrentUserSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (status !== "loading" && role === UserRole.JOB_SEEKER)
+    if (sessionStatus !== "loading" && userRole === UserRole.JOB_SEEKER)
       router.push("/pages/jobs");
-    if (status !== "loading" && role === UserRole.RECRUITER)
+    if (sessionStatus !== "loading" && userRole === UserRole.EMPLOYER)
       router.push("/pages/post-job");
-    if (status !== "loading" && role === UserRole.NOT_ASSIGNED)
+    if (sessionStatus !== "loading" && userRole === UserRole.NOT_ASSIGNED)
       router.push("/pages/select-role");
-  }, [role, status, router]);
+  }, [userRole, sessionStatus, router]);
+
+  if (userRole || sessionStatus === "loading") {
+    return (
+      <div className="min-h-screen pt-[calc(72px+4rem)] pb-[4rem] flex justify-center">
+        <div className="relative max-w-5xl w-full px-4 flex flex-col items-center justify-center">
+          <div className="redirecting font-bold text-xl text-violet-600 font-sans"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center px-4">
-      <div className="w-full sm:w-[400px]">
-        <p className="font-bold text-xl mb-4">Sign in</p>
-        <div className="p-8 shadow-md bg-white rounded">
-          <form action={googleSigninAction}>
-            <GoogleSigninButton />
-          </form>
-          <form action={githubSigninAction}>
-            <GithubSigninButton />
-          </form>
+    <div className="min-h-screen pt-[calc(72px+4rem)] pb-[4rem] flex justify-center">
+      <div className="relative max-w-5xl w-full px-4 flex flex-col items-center justify-center">
+        <div className="w-full h-full flex flex-col items-center justify-center bg-white shadow-md rounded-xl p-8">
+          <h1 className="font-bold text-lg sm:text-2xl mb-8 sm:mb-4 text-violet-600">
+            Start exploring by signing in
+          </h1>
+          <div className="flex flex-col items-center max-w-[500px] w-full">
+            <div className="relative h-[200px] sm:h-[250px] w-[200px] sm:w-[250px]">
+              <Image
+                src="/assets/login_svg.svg"
+                alt="login"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="w-full flex flex-col mt-8">
+              <form action={googleSigninAction}>
+                <GoogleSigninButton />
+              </form>
+              <form action={githubSigninAction}>
+                <GithubSigninButton />
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default SigninPage;
+}
