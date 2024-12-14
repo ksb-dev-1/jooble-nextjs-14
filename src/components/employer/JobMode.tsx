@@ -17,8 +17,8 @@ interface JobModeProps {
 
 export default function JobMode({ register, error }: JobModeProps) {
   return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor="jobMode" className="font-medium text-slate-700">
+    <div className="flex flex-col gap-2 mt-4 sm:mt-0">
+      <label htmlFor="jobMode" className="font-semibold text-slate-700">
         Job mode
       </label>
       <Select

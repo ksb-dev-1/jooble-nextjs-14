@@ -7,7 +7,7 @@ import { getUserIdServer, getIsJobSeekerServer } from "@/lib/user";
 
 // components
 import UnauthorizedAccess from "@/components/UnauthorizedAccess";
-import SavedJobsSkeleton from "@/components/skeletons/SavedJobsSkeleton";
+import SavedJobsPageSkeleton from "@/components/skeletons/SavedJobsPageSkeleton";
 import SavedJobsList from "@/components/job_seeker/SavedJobsList";
 
 export const metadata: Metadata = {
@@ -31,9 +31,9 @@ export default async function SavedJobsPage() {
   if (!userID) redirect("/pages/signin");
 
   return (
-    <div className="min-h-[calc(100vh-88px)] pt-[calc(72px+4rem)] pb-[4rem] flex justify-center">
+    <div className="min-h-screen pt-[calc(72px+4rem)] pb-[4rem] flex justify-center">
       <div className="relative max-w-5xl w-full px-4 flex flex-col">
-        <Suspense fallback={<SavedJobsSkeleton />}>
+        <Suspense fallback={<SavedJobsPageSkeleton />}>
           <SavedJobsList userID={userID} />
         </Suspense>
       </div>

@@ -12,6 +12,7 @@ import { useCurrentUserSession } from "@/hooks/useCurrentUserSession";
 // 3rd party libraries
 import { UserRole } from "@prisma/client";
 import toast from "react-hot-toast";
+import { Loader2 } from "lucide-react";
 
 export default function Options() {
   const [role, setRole] = useState<string>("Job seeker");
@@ -32,6 +33,32 @@ export default function Options() {
       router.push("/pages/post-job");
     }
   }, [userID, userRole, sessionStatus, router]);
+
+  if (sessionStatus === "loading") {
+    return (
+      <div className="min-h-screen pt-[calc(72px+4rem)] pb-[4rem] flex justify-center">
+        <div className="relative max-w-5xl w-full px-4 flex flex-col items-center justify-center">
+          <div className="flex items-end">
+            <span className="font-bold text-2xl mr-2">Loading</span>
+            <span className="dots inline-block mb-1"></span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (userRole && userRole !== UserRole.NOT_ASSIGNED) {
+    return (
+      <div className="min-h-screen pt-[calc(72px+4rem)] pb-[4rem] flex justify-center">
+        <div className="relative max-w-5xl w-full px-4 flex flex-col items-center justify-center">
+          <div className="flex items-end">
+            <span className="font-bold text-2xl mr-2">Redirecting</span>
+            <span className="dots inline-block mb-1"></span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const assignRole = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -107,14 +134,15 @@ export default function Options() {
         <button
           type="button"
           disabled={isPending}
-          className={`font-semibold px-8 py-4 rounded-[50px] text-white ${
+          className={`font-medium flex items-center px-8 py-4 rounded-[50px] text-white ${
             isPending
               ? "bg-[#555] cursor-not-allowed"
               : "bg-black hover:bg-[#333]"
           } transition text-white mt-4 sm:mt-8 w-full sm:w-fit`}
           onClick={assignRole}
         >
-          Submit
+          <span>Submit</span>
+          {isPending && <Loader2 size={24} className="ml-2 animate-spin" />}
         </button>
       </div>
     </div>

@@ -10,7 +10,7 @@
 
 body {
   background: #f1f5f9;
-  /* background: #ede9fe; */
+  color: #333;
   overflow-x: hidden;
 }
 
@@ -74,20 +74,23 @@ body {
   }
 }
 
-/* HTML: <div class="redirecting"></div> */
-.redirecting {
-  width: fit-content;
-  font-weight: bold;
-  font-family: monospace;
-  font-size: 30px;
-  clip-path: inset(0 3ch 0 0);
-  animation: l4 1s steps(4) infinite;
+/* HTML: <div class="loader"></div> */
+.dots {
+  width: 40px;
+  aspect-ratio: 4;
+  --_g: no-repeat radial-gradient(circle closest-side, #000 90%, #0000);
+  background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 100%;
+  animation: l7 1s infinite linear;
 }
-.redirecting:before {
-  content: "Redirecting...";
-}
-@keyframes l4 {
-  to {
-    clip-path: inset(0 -1ch 0 0);
+@keyframes l7 {
+  33% {
+    background-size: calc(100% / 3) 0%, calc(100% / 3) 100%, calc(100% / 3) 100%;
+  }
+  50% {
+    background-size: calc(100% / 3) 100%, calc(100% / 3) 0%, calc(100% / 3) 100%;
+  }
+  66% {
+    background-size: calc(100% / 3) 100%, calc(100% / 3) 100%, calc(100% / 3) 0%;
   }
 }

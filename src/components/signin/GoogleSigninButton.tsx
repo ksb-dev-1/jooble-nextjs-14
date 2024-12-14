@@ -17,7 +17,7 @@ export default function GoogleSigninButton() {
         pending
           ? "text-[#999] cursor-not-allowed"
           : "bg-white hover:bg-slate-100"
-      } border border-slate-300 px-8 py-4 rounded-[50px] transition`}
+      } border border-slate-300 px-8 py-4 rounded-xl transition`}
     >
       <FcGoogle className="text-2xl mr-4" />
       <span className="font-medium">Sign in with Google</span>

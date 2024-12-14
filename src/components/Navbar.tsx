@@ -40,12 +40,15 @@ const Navbar = () => {
   );
 
   const authLoading = (
-    <div className="flex items-center">
-      {[1, 2, 3].map((_, index) => (
-        <span key={index}>{skeletonLink}</span>
-      ))}
-      {skeletonAvatar}
-    </div>
+    <>
+      <div className="hidden sm:flex items-center">
+        {[1, 2, 3].map((_, index) => (
+          <span key={index}>{skeletonLink}</span>
+        ))}
+        {skeletonAvatar}
+      </div>
+      <span className="flex sm:hidden">{skeletonAvatar}</span>
+    </>
   );
 
   const avatar = (
@@ -130,20 +133,20 @@ const Navbar = () => {
             <div className="flex items-center">
               {userRole === UserRole.JOB_SEEKER && (
                 <>
-                  <Link href="/pages/jobs" className="ml-8">
+                  <Link href="/pages/jobs" className="ml-8 font-medium">
                     Jobs
                   </Link>
-                  <Link href="/pages/saved-jobs" className="ml-8">
+                  <Link href="/pages/saved-jobs" className="ml-8 font-medium">
                     Saved
                   </Link>
-                  <Link href="/pages/applied-jobs" className="ml-8">
+                  <Link href="/pages/applied-jobs" className="ml-8 font-medium">
                     Applied
                   </Link>
                 </>
               )}
 
               {userRole === UserRole.EMPLOYER && (
-                <Link href="/pages/post-job" className="ml-8">
+                <Link href="/pages/post-job" className="ml-8 font-medium">
                   Post Job
                 </Link>
               )}

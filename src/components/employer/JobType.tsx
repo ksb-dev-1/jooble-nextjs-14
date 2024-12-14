@@ -18,7 +18,7 @@ interface JobTypeProps {
 export default function JobType({ register, error }: JobTypeProps) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor="jobType" className="font-medium text-slate-700">
+      <label htmlFor="jobType" className="font-semibold text-slate-700">
         Job type
       </label>
       <Select

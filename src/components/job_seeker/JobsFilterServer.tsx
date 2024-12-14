@@ -27,7 +27,7 @@ export default async function JobsFilterServer({
     defaultValues.jobMode;
 
   return (
-    <div className="bg-white shadow-md rounded p-4 mr-4 hidden md:block w-[400px]">
+    <div className="bg-white shadow-md rounded-xl p-8 mr-4 hidden md:block w-[400px]">
       <form action={filterJobsAction} key={JSON.stringify(defaultValues)}>
         <div className="flex flex-col gap-2">
           <label htmlFor="search" className="font-medium">
@@ -38,28 +38,8 @@ export default async function JobsFilterServer({
             name="search"
             placeholder="Company / Designation / Skill"
             defaultValue={defaultValues.search || ""}
-            className="px-3 py-2 border border-slate-300 rounded focus-within:outline-none focus-within:outline-violet-300 disabled:cursor-not-allowed disabled:opacity-50 placeholder:text-sm"
+            className="px-3 py-2 border border-slate-300 rounded-xl focus-within:outline-none focus-within:outline-violet-300 disabled:cursor-not-allowed disabled:opacity-50 placeholder:text-sm"
           />
-        </div>
-
-        {/* Job JobTjobType Select */}
-        <div className="flex flex-col gap-2 mt-6">
-          <label htmlFor="jobType" className="font-medium">
-            Job type
-          </label>
-          <Select
-            id="jobType"
-            name="jobType"
-            defaultValue={defaultValues.jobType || ""}
-            className="border border-slate-300 rounded"
-          >
-            <option value="">All</option>
-            {JOB_TYPES.map((jobType) => (
-              <option key={jobType} value={jobType}>
-                {jobType.charAt(0).toUpperCase() + jobType.substring(1)}
-              </option>
-            ))}
-          </Select>
         </div>
 
         {/* Location Select */}
@@ -71,7 +51,7 @@ export default async function JobsFilterServer({
             id="location"
             name="location"
             defaultValue={defaultValues.location || ""}
-            className="border border-slate-300 rounded"
+            className="border border-slate-300 rounded-xl"
           >
             <option value="">All</option>
             {distinctLocations.map((location) => (
@@ -85,13 +65,13 @@ export default async function JobsFilterServer({
         {/* Job Mode Select */}
         <div className="flex flex-col gap-2 mt-6">
           <label htmlFor="jobMode" className="font-medium">
-            Job mode
+            Mode
           </label>
           <Select
             id="jobMode"
             name="jobMode" // Ensure this matches the schema field
             defaultValue={defaultValues.jobMode || ""}
-            className="border border-slate-300 rounded"
+            className="border border-slate-300 rounded-xl"
           >
             <option value="">All</option>
             {JOB_MODES.map((jobMode) => (
@@ -102,7 +82,27 @@ export default async function JobsFilterServer({
           </Select>
         </div>
 
-        <FilterJobsButton className="rounded mt-4 w-full border border-violet-600 bg-violet-600 text-white hover:bg-violet-500 px-4 transition">
+        {/* Job JobTjobType Select */}
+        <div className="flex flex-col gap-2 mt-6">
+          <label htmlFor="jobType" className="font-medium">
+            Type
+          </label>
+          <Select
+            id="jobType"
+            name="jobType"
+            defaultValue={defaultValues.jobType || ""}
+            className="border border-slate-300 rounded-xl"
+          >
+            <option value="">All</option>
+            {JOB_TYPES.map((jobType) => (
+              <option key={jobType} value={jobType}>
+                {jobType.charAt(0).toUpperCase() + jobType.substring(1)}
+              </option>
+            ))}
+          </Select>
+        </div>
+
+        <FilterJobsButton className="rounded-xl mt-4 w-full border border-violet-600 bg-violet-600 text-white hover:bg-violet-500 px-4 transition">
           Filter jobs
         </FilterJobsButton>
       </form>

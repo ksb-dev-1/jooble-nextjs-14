@@ -16,42 +16,46 @@ import { TbBriefcaseFilled } from "react-icons/tb";
 
 export default function JobCard({ job }: { job: Job }) {
   return (
-    <div key={job.id} className="relative">
+    <div className="relative">
       <Link
         href={`/pages/jobs/${job.id}`}
-        className="inline-block w-full mb-4 p-4 md:p-8 cursor-pointer bg-white shadow-md rounded hover:shadow-xl transition"
+        className="inline-block w-full mb-4 p-4 md:p-8 cursor-pointer bg-white shadow-md rounded-xl hover:shadow-xl transition"
       >
-        <h1 className="font-bold text-lg mb-1">{job.role}</h1>
+        <h1 className="font-bold mb-1">{job.role}</h1>
         <p className="font-semibold capitalize text-violet-600">
           {job.companyName}
         </p>
         <div className="flex items-center flex-wrap mt-2">
-          <div className="flex items-center mt-2 mr-8">
+          <div className="flex items-center mt-2 mr-6">
             <TbBriefcaseFilled />
-            <span className="ml-2">{job.experience} Years</span>
+            <span className="ml-2 text-sm">{job.experience}</span>
           </div>
-          <div className="flex items-center mt-2 mr-8">
+          <div className="flex items-center mt-2 mr-6">
             <LuIndianRupee />
-            <span className="ml-1">{formatMoney(job.salary).slice(1)}</span>
+            <span className="ml-1 text-sm">
+              {formatMoney(job.salary).slice(1)}
+            </span>
           </div>
-          <div className="flex items-center mt-2 mr-8">
+          <div className="flex items-center mt-2 mr-6">
             <BsGlobeAmericas />
-            <span className="ml-2">{job.location}</span>
+            <span className="ml-2 text-sm">{job.location}</span>
           </div>
-          <div className="flex items-center mt-2 mr-8">
+          <div className="flex items-center mt-2 mr-6">
             <RxLapTimer />
-            <span className="ml-2">{job.jobType}</span>
+            <span className="ml-2 text-sm">{job.jobType}</span>
           </div>
-          <div className="flex items-center mt-2 mr-8">
+          <div className="flex items-center mt-2 mr-6">
             <IoLocationSharp />
-            <span className="ml-1">{job.jobMode}</span>
+            <span className="ml-1 text-sm">{job.jobMode}</span>
           </div>
         </div>
         <div className="mt-2 flex items-center flex-wrap">
           {job.skills?.length > 0
             ? job.skills.map((skill: string, index: number) => (
                 <div key={skill} className="mt-2">
-                  <span className="inline-block rounded-xl">{skill}</span>
+                  <span className="inline-block rounded-xl text-sm">
+                    {skill}
+                  </span>
                   {index !== job.skills.length - 1 && (
                     <span className="h-1 w-1 mx-2 rounded-full inline-block bg-[#333]"></span>
                   )}

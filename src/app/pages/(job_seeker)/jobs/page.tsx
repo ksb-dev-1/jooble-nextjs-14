@@ -7,7 +7,7 @@ import { getUserIdServer, getIsJobSeekerServer } from "@/lib/user";
 
 // components
 import UnauthorizedAccess from "@/components/UnauthorizedAccess";
-import JobsSkeleton from "@/components/skeletons/JobsSkeleton";
+import JobsPageSkeleton from "@/components/skeletons/JobsPageSkeleton";
 import JobsFilterServer from "@/components/job_seeker/JobsFilterServer";
 import JobsList from "@/components/job_seeker/JobsList";
 
@@ -51,8 +51,8 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   return (
     <div className="min-h-screen pt-[calc(72px+4rem)] pb-[4rem] flex justify-center">
       <div className="relative max-w-5xl w-full px-4 flex flex-col">
-        <Suspense fallback={<JobsSkeleton />}>
-          <div className="flex flex-col md:flex-row items-start">
+        <Suspense fallback={<JobsPageSkeleton />}>
+          <div className="flex flex-row items-start">
             <JobsFilterServer defaultValues={filterValues} />
             <JobsList filterValues={filterValues} />
           </div>

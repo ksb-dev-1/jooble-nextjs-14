@@ -12,14 +12,14 @@ export default function GithubSigninButton() {
     <button
       type="submit"
       disabled={pending}
-      className={`w-full flex items-center justify-center rounded ${
+      className={`w-full flex items-center justify-center rounded text-white ${
         pending
-          ? "text-[#999] cursor-not-allowed"
-          : "bg-white hover:bg-slate-100"
-      } border border-slate-300 px-8 py-4 mt-4 rounded-[50px] transition`}
+          ? "bg-[#555] border-[#333] cursor-not-allowed"
+          : "bg-black border-black hover:bg-[#333]"
+      } border px-8 py-4 mt-2 rounded-xl transition`}
     >
       <FaGithub className="text-2xl mr-4" />
-      <span className="font-medium">Sign in with Github</span>
+      <span>Sign in with Github</span>
       {pending && <Loader2 size={24} className="ml-2 animate-spin" />}
     </button>
   );

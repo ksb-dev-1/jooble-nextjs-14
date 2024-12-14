@@ -61,13 +61,13 @@ const Pagination = ({ totalPages }: any) => {
             max={totalPages}
             value={jumpPage}
             onChange={(e) => setJumpPage(e.target.value)}
-            className="border border-slate-300 px-2 py-2 rounded"
+            className="border border-slate-300 px-3 py-2 rounded-xl min-w-[100px] focus-within:outline-none focus-within:outline-violet-300"
             placeholder="Jump to"
           />
           <button
             aria-label="go to page"
             type="submit"
-            className="bg-violet-600 hover:bg-violet-700 transition text-white px-4 py-2 rounded"
+            className="bg-violet-600 hover:bg-violet-700 transition text-white px-4 py-2 rounded-xl"
           >
             Go
           </button>

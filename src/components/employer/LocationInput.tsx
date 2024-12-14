@@ -51,7 +51,7 @@ const LocationInputNew = ({
   }, [locationSearchInput]);
 
   return (
-    <div className="relative flex flex-col">
+    <div className="relative flex flex-col mt-4">
       <label htmlFor={htmlFor} className="font-semibold text-gray-700">
         {labelName}
       </label>
@@ -60,6 +60,7 @@ const LocationInputNew = ({
         id={htmlFor}
         type={inputType}
         placeholder={placeholder}
+        autoComplete="off"
         onChange={(e) => {
           setLocationSearchInput(e.target.value);
           setValue("location", e.target.value); // Trigger validation
@@ -79,13 +80,13 @@ const LocationInputNew = ({
       )}
 
       {locationSearchInput.trim() && hasFocus && (
-        <ul className="absolute top-20 z-10 w-full bg-white border rounded shadow">
+        <ul className="absolute top-20 z-10 w-full bg-white border rounded-xl p-2 shadow-md">
           {!filteredCities.length && <li className="p-3">No results found.</li>}
           {filteredCities.map((city) => (
             <li key={city}>
               <button
                 type="button"
-                className="block w-full p-2 text-left hover:bg-gray-100"
+                className="block w-full px-4 py-2 rounded-xl text-left hover:bg-gray-100"
                 onMouseDown={(e) => {
                   e.preventDefault(); // Prevent losing focus
                   setLocationSearchInput("");

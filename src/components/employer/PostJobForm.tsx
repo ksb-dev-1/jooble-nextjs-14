@@ -77,10 +77,10 @@ const ReactHookForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white max-w-3xl shadow-md rounded-xl w-full p-4 sm:p-8"
+      className="bg-white max-w-3xl shadow-md rounded-xl w-full p-8"
     >
       <h1 className="font-extrabold text-2xl mb-6">Post a new job</h1>
-      <div className="grid grid-cols-2 gap-2 sm:gap-4">
+      <div className="grid sm:grid-cols-2 gap-2 sm:gap-4">
         <InputField
           htmlFor="companyName"
           labelName="Company name"
@@ -99,7 +99,7 @@ const ReactHookForm = () => {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-2 sm:gap-4 mt-6">
+      <div className="grid sm:grid-cols-2 gap-2 sm:gap-4 mt-2">
         <InputField
           htmlFor="role"
           labelName="Designation"
@@ -118,7 +118,7 @@ const ReactHookForm = () => {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-2 sm:gap-4 mt-6">
+      <div className="grid sm:grid-cols-2 gap-2 sm:gap-4 mt-2">
         <LocationInput
           htmlFor="location"
           labelName="Location"
@@ -138,7 +138,7 @@ const ReactHookForm = () => {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-2 sm:gap-4 mt-6">
+      <div className="grid sm:grid-cols-2 gap-2 sm:gap-4 mt-6">
         <JobType register={register} error={errors.jobType?.message} />
         <JobMode register={register} error={errors.jobMode?.message} />
       </div>
