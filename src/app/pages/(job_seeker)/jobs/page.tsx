@@ -1,14 +1,14 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 // lib
 import { JobFilterValues } from "@/lib/validation";
 import { getUserIdServer, getIsJobSeekerServer } from "@/lib/user";
 
 // components
-import UnauthorizedAccess from "@/components/UnauthorizedAccess";
+import Error from "@/components/Error";
 import JobsPageSkeleton from "@/components/skeletons/JobsPageSkeleton";
-import JobsFilterServer from "@/components/job_seeker/JobsFilterServer";
 import JobsList from "@/components/job_seeker/JobsList";
 
 interface JobsPageProps {
@@ -31,12 +31,12 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   const isJobSeeker = await getIsJobSeekerServer();
 
   if (!userID) {
-    return <UnauthorizedAccess message="Sign in to access this page." />;
+    redirect("/pages/signin");
   }
 
   if (!isJobSeeker) {
     return (
-      <UnauthorizedAccess message="Only job seekers can access this page." />
+      <Error status={401} message="Only job seekers can access this page." />
     );
   }
 
@@ -49,15 +49,8 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   };
 
   return (
-    <div className="min-h-screen pt-[calc(72px+4rem)] pb-[4rem] flex justify-center">
-      <div className="relative max-w-5xl w-full px-4 flex flex-col">
-        <Suspense fallback={<JobsPageSkeleton />}>
-          <div className="flex flex-row items-start">
-            <JobsFilterServer defaultValues={filterValues} />
-            <JobsList filterValues={filterValues} />
-          </div>
-        </Suspense>
-      </div>
-    </div>
+    <Suspense fallback={<JobsPageSkeleton />}>
+      <JobsList filterValues={filterValues} userID={userID} />
+    </Suspense>
   );
 }

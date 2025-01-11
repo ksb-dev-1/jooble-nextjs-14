@@ -1,39 +1,43 @@
 // actions
-import fetchSavedJobsAction from "@/actions/fetchSavedJobsAction";
+import { fetchSavedJobsAction } from "@/actions/job-seeker-actions";
 
 // components
-import JobCard from "@/components/job_seeker/JobCard";
+import Error from "@/components/Error";
+import Container from "@/components/Container";
+import JobCard from "@/components/JobCard";
 
-export default async function SavedJobs({ userID }: { userID: string }) {
-  let jobs = [];
+export default async function SavedJobsList({ userID }: { userID: string }) {
+  const response = await fetchSavedJobsAction(userID);
 
-  try {
-    // Call the server action to fetch saved jobs
-    const savedJobs = await fetchSavedJobsAction(userID);
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    jobs = savedJobs.map((savedJob: any) => savedJob.job);
-  } catch (error) {
-    console.error("Error fetching jobs:", error);
+  if (response.status === 500) {
+    return <Error status={response.status} message="Internal server error" />;
   }
 
+  if (response.status === 404) {
+    return <Error status={response.status} message="No saved jobs found!" />;
+  }
+
+  const savedJobs =
+    response.data?.savedJobs
+      .map((savedJob) => savedJob.job)
+      .filter((job): job is Job => job !== null) ?? [];
+
   return (
-    <>
-      <h1 className="flex items-center font-bold text-xl mb-8">
-        <span>Saved jobs</span>
-        <div className="ml-2 relative h-7 w-7 rounded-full bg-[#333] text-white">
-          <span className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-base font-normal">
-            {jobs.length}
+    <Container>
+      <div className="flex items-center justify-between mb-4 w-fit">
+        <h1 className="font-bold text-xl">Saved jobs - {savedJobs.length}</h1>
+        {/* <div className="ml-2 relative h-10 w-10 rounded-full bg-[#333] text-white">
+          <span className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 font-medium">
+            {savedJobs.length}
           </span>
-        </div>
-      </h1>
-      <div className="w-full grid sm:grid-cols-2 gap-x-4">
-        {jobs.length > 0 ? (
-          jobs.map((job: Job) => <JobCard key={job.id} job={job} />)
-        ) : (
-          <p>No bookmarks found</p>
-        )}
+        </div> */}
       </div>
-    </>
+      <div className="w-full grid md:grid-cols-2 gap-x-4">
+        {savedJobs.map((job: Job) => (
+          <JobCard key={job.id} job={job} isDefaultSaved={true} />
+        ))}
+      </div>
+      <div></div>
+    </Container>
   );
 }

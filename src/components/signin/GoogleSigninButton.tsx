@@ -13,11 +13,11 @@ export default function GoogleSigninButton() {
     <button
       type="submit"
       disabled={pending}
-      className={`w-full flex items-center justify-center rounded ${
+      className={`w-full flex items-center justify-center rounded-xl ${
         pending
           ? "text-[#999] cursor-not-allowed"
           : "bg-white hover:bg-slate-100"
-      } border border-slate-300 px-8 py-4 rounded-xl transition`}
+      } border border-slate-300 px-8 py-4 transition`}
     >
       <FcGoogle className="text-2xl mr-4" />
       <span className="font-medium">Sign in with Google</span>

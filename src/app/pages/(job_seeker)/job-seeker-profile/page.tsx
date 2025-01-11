@@ -1,11 +1,13 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 // lib
 import { getUserIdServer, getIsJobSeekerServer } from "@/lib/user";
 
 // components
-import UnauthorizedAccess from "@/components/UnauthorizedAccess";
+import UnauthorizedAccess from "@/components/errors/UnauthorizedAccess";
+import Container from "@/components/Container";
 
 export const metadata: Metadata = {
   title: "Jooble | Profile",
@@ -16,7 +18,7 @@ export default async function AppliedJobsPage() {
   const isJobSeeker = await getIsJobSeekerServer();
 
   if (!userID) {
-    return <UnauthorizedAccess message="Sign in to access this page." />;
+    redirect("/pages/signin");
   }
 
   if (!isJobSeeker) {
@@ -26,10 +28,8 @@ export default async function AppliedJobsPage() {
   }
 
   return (
-    <div className="min-h-screen pt-[calc(72px+4rem)] pb-[4rem] flex justify-center">
-      <div className="relative max-w-5xl w-full px-4 flex flex-col">
-        <Suspense fallback={<div>Loading...</div>}>Job seeker profile</Suspense>
-      </div>
-    </div>
+    <Container>
+      <Suspense fallback={<div>Loading...</div>}>Job seeker profile</Suspense>
+    </Container>
   );
 }

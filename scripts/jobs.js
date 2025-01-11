@@ -1,4 +1,4 @@
-const userID = "675c2fe79835703aa8bc9c34";
+const userID = "6760198870ecc72268ba4496";
 
 export const placeholderJobs = [
   {
@@ -56,7 +56,7 @@ Stripe is an equal opportunity employer. We value diversity and are committed to
   {
     postedById: userID,
     companyLogo: "",
-    companyName: "Healthkart",
+    companyName: "Vercel",
     experience: "0-1",
     role: "Front-End Developer",
     jobType: "Internship",
@@ -112,7 +112,7 @@ Join us at Vercel and be a part of shaping the future of web development!
   {
     postedById: userID,
     companyLogo: "",
-    companyName: "flipkart",
+    companyName: "OpenAI",
     experience: "0-2",
     role: "Full-Stack Developer",
     jobType: "Full-Time",
@@ -204,7 +204,7 @@ Try it out for free at [https://smartdiary.co](https://smartdiary.co).
   {
     postedById: userID,
     companyLogo: "",
-    companyName: "Google",
+    companyName: "Microsoft",
     experience: "2-4",
     role: "DevOps",
     jobType: "Full-Time",
@@ -256,7 +256,7 @@ As a Microsoft contractor, you'll have the opportunity to work on exciting proje
   {
     postedById: userID,
     companyLogo: "",
-    companyName: "Amazon",
+    companyName: "Apple",
     experience: "3-6",
     role: "Android Developer",
     jobType: "Part-Time",
@@ -311,7 +311,7 @@ Join Apple and be a part of a team that's dedicated to making a difference in th
   {
     postedById: userID,
     companyLogo: "",
-    companyName: "Facebook",
+    companyName: "Shopify",
     experience: "5-6",
     role: "ios Developer",
     jobType: "Full-Time",
@@ -419,7 +419,7 @@ This is a fantastic opportunity for those looking to kickstart their career in w
   {
     postedById: userID,
     companyLogo: "",
-    companyName: "Cloudify Inc.",
+    companyName: "Amazon",
     experience: "3-5 years",
     role: "Cloud Engineer",
     jobType: "Full-Time",
@@ -475,7 +475,7 @@ This is a fantastic opportunity for those looking to kickstart their career in w
   {
     postedById: userID,
     companyLogo: "",
-    companyName: "CodeCrafters",
+    companyName: "Flipkart",
     experience: "3-5 years",
     role: "Backend Developer",
     jobType: "Full-Time",

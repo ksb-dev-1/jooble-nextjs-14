@@ -1,6 +1,6 @@
 const JobsFilterSkeleton = () => {
   return (
-    <div className="bg-white shadow-md rounded-xl p-8 mr-4 hidden md:block w-[400px]">
+    <div className="bg-white border border-slate-300 rounded-xl p-8 mr-4 hidden md:block w-[400px]">
       <form>
         <div className="flex flex-col gap-2">
           <label
@@ -45,7 +45,7 @@ const JobsFilterSkeleton = () => {
           <div className="skeleton rounded-xl h-[41.6px] w-full pl-3 pr-8 text-sm"></div>
         </div>
 
-        <button className="skeleton rounded-xl h-[41.6px] mt-4 w-full px-4">
+        <button className="skeleton rounded-xl h-[41.6px] mt-2 w-full px-4">
           Filter jobs
         </button>
       </form>

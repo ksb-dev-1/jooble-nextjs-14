@@ -13,17 +13,26 @@ enum UserRole {
   NOT_ASSIGNED
 }
 
+enum ApplicationStatus {
+  PENDING
+  INTERVIEW
+  OFFER
+  REJECT
+}
+
 model User {
-  id            String     @id @default(auto()) @map("_id") @db.ObjectId // MongoDB uses ObjectId by default
+  id            String           @id @default(auto()) @map("_id") @db.ObjectId // MongoDB uses ObjectId by default
   name          String?
-  email         String     @unique
+  email         String           @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  role          UserRole   @default(NOT_ASSIGNED)
-  savedJobs     SavedJob[] @relation("UserSavedJobs")
-  postedJobs    Job[]      @relation("UserPostedJobs")
+  role          UserRole         @default(NOT_ASSIGNED)
+  savedJobs     SavedJob[]       @relation("UserSavedJobs")
+  applications  JobApplication[] @relation("UserApplications")
+  resume        Resume?          @relation("UserResume")
+  postedJobs    Job[]            @relation("UserPostedJobs")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -72,7 +81,7 @@ model VerificationToken {
 }
 
 model Job {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  id           String           @id @default(auto()) @map("_id") @db.ObjectId
   companyLogo  String?
   companyName  String
   experience   String
@@ -84,9 +93,10 @@ model Job {
   skills       String[]
   openings     Int
   description  String?
-  savedByUsers SavedJob[] @relation("JobSavedByUsers")
-  postedBy     User       @relation("UserPostedJobs", fields: [postedById], references: [id], onDelete: Cascade)
-  postedById   String     @db.ObjectId
+  savedByUsers SavedJob[]       @relation("JobSavedByUsers")
+  applications JobApplication[] @relation("JobApplications")
+  postedBy     User             @relation("UserPostedJobs", fields: [postedById], references: [id], onDelete: Cascade)
+  postedById   String           @db.ObjectId
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -99,4 +109,22 @@ model SavedJob {
   job       Job?     @relation("JobSavedByUsers", fields: [jobId], references: [id], onDelete: Cascade)
   jobId     String   @db.ObjectId
   createdAt DateTime @default(now())
+}
+
+model Resume {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user      User     @relation("UserResume", fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @unique @db.ObjectId
+  createdAt DateTime @default(now())
+}
+
+model JobApplication {
+  id        String            @id @default(auto()) @map("_id") @db.ObjectId
+  user      User              @relation("UserApplications", fields: [userId], references: [id], onDelete: Cascade)
+  userId    String            @db.ObjectId
+  job       Job               @relation("JobApplications", fields: [jobId], references: [id], onDelete: Cascade)
+  jobId     String            @db.ObjectId
+  status    ApplicationStatus @default(PENDING)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
 }

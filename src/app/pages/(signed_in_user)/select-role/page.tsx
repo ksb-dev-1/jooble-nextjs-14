@@ -4,7 +4,7 @@ import { useState, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 // actions
-import { selectRoleAction } from "@/actions/selectRoleAction";
+import { selectRoleAction } from "@/actions/select-role-action";
 
 // hooks
 import { useCurrentUserSession } from "@/hooks/useCurrentUserSession";
@@ -113,9 +113,6 @@ export default function Options() {
                   setRole("Employer");
                 }
               }}
-              // className={`absolute top-2 right-2 bottom-2 rounded-[50px] px-8 py-4 font-semibold text-lg flex items-center justify-center w-[50%] sm:w-fit ${
-              //   !isPending ? "hover:bg-slate-100" : "cursor-not-allowed"
-              // }`}
               className="absolute top-2 right-2 bottom-2 w-[50%] sm:w-[150px] rounded-[50px] px-8 py-4 font-semibold text-lg flex items-center justify-center hover:bg-slate-100"
             >
               Employer

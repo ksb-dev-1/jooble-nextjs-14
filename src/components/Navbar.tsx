@@ -108,7 +108,7 @@ const Navbar = () => {
   return (
     <div
       ref={navbarRef}
-      className="fixed z-20 top-0 left-0 right-0 bg-white h-[4.25rem] flex items-center justify-center"
+      className="fixed z-20 top-0 left-0 right-0 bg-white border-b border-slate-300 h-[4.25rem] flex items-center justify-center"
     >
       <div className="max-w-5xl w-full flex items-center justify-between px-4">
         <Link href="/" className="text-3xl font-extrabold text-violet-600">
@@ -132,7 +132,7 @@ const Navbar = () => {
           ) : (
             <div className="flex items-center">
               {userRole === UserRole.JOB_SEEKER && (
-                <>
+                <div className="hidden sm:flex items-center">
                   <Link href="/pages/jobs" className="ml-8 font-medium">
                     Jobs
                   </Link>
@@ -142,13 +142,18 @@ const Navbar = () => {
                   <Link href="/pages/applied-jobs" className="ml-8 font-medium">
                     Applied
                   </Link>
-                </>
+                </div>
               )}
 
               {userRole === UserRole.EMPLOYER && (
-                <Link href="/pages/post-job" className="ml-8 font-medium">
-                  Post Job
-                </Link>
+                <div className="flex items-center">
+                  <Link href="/pages/post-job" className="ml-8 font-medium">
+                    Post
+                  </Link>
+                  <Link href="/pages/posted-jobs" className="ml-8 font-medium">
+                    Posted
+                  </Link>
+                </div>
               )}
 
               {userID && avatar}

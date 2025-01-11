@@ -24,7 +24,7 @@ export default function Heading() {
           !userID
             ? "/pages/signin"
             : userRole === UserRole.JOB_SEEKER
-            ? "/pages/jobs-tanstack-query"
+            ? "/pages/jobs"
             : userRole === UserRole.EMPLOYER
             ? "/pages/post-job"
             : userRole === UserRole.NOT_ASSIGNED

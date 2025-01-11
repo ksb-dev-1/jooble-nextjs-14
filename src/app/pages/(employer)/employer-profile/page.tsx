@@ -1,10 +1,11 @@
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 // lib
 import { getUserIdServer, getIsEmployerServer } from "@/lib/user";
 
 // components
-import UnauthorizedAccess from "@/components/UnauthorizedAccess";
+import UnauthorizedAccess from "@/components/errors/UnauthorizedAccess";
 
 export const metadata: Metadata = {
   title: "Jooble | Profile",
@@ -15,7 +16,7 @@ export default async function EmployerProfilePage() {
   const isEmployer = await getIsEmployerServer();
 
   if (!userID) {
-    return <UnauthorizedAccess message="Sign in to access this page." />;
+    redirect("/pages/signin");
   }
 
   if (!isEmployer) {

@@ -10,7 +10,7 @@ export const selectRoleAction = async (role: UserRole) => {
   const user = session?.user;
 
   if (!user) {
-    return { error: "Unauthorized" };
+    return { error: "You must be signed in to perform this action" };
   }
 
   const dbUser = await prisma.user.findUnique({
@@ -20,7 +20,7 @@ export const selectRoleAction = async (role: UserRole) => {
   });
 
   if (!dbUser) {
-    return { error: "Unauthorized" };
+    return { error: "You must be signed in to perform this action" };
   }
 
   await prisma.user.update({

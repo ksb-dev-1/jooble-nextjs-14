@@ -16,7 +16,7 @@ export default function GithubSigninButton() {
         pending
           ? "bg-[#555] border-[#333] cursor-not-allowed"
           : "bg-black border-black hover:bg-[#333]"
-      } border px-8 py-4 mt-2 rounded-xl transition`}
+      } border px-8 py-4 rounded-xl transition`}
     >
       <FaGithub className="text-2xl mr-4" />
       <span>Sign in with Github</span>

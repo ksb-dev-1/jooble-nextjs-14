@@ -9,7 +9,7 @@
 }
 
 body {
-  background: #f1f5f9;
+  /* background: #f1f5f9; */
   color: #333;
   overflow-x: hidden;
 }
@@ -93,4 +93,29 @@ body {
   66% {
     background-size: calc(100% / 3) 100%, calc(100% / 3) 100%, calc(100% / 3) 0%;
   }
+}
+
+.custom-upload-container {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem; */
+}
+
+.custom-upload-container [data-ut-element="button"] {
+  background-color: #7c3aed; /* Green background */
+  color: white; /* White text */
+  padding: 0.5rem 1rem; /* Padding */
+  border-radius: 12px; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.custom-upload-container [data-ut-element="button"]:hover {
+  background-color: #5b21b6; /* Darker green on hover */
+}
+
+.custom-upload-container [data-ut-element="allowed-content"] {
+  font-size: 0.875rem;
+  display: none;
 }

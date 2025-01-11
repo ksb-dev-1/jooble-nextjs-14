@@ -1,6 +1,6 @@
 /// actions
-import getDistinctLocationsAction from "@/actions/getDistinctLocationsAction";
-import filterJobsAction from "@/actions/filterJobsAction";
+import getDistinctLocationsAction from "@/actions/get-distinct-locations-action";
+import { filterJobsAction } from "@/actions/job-seeker-actions";
 
 // lib
 import { JobFilterValues } from "@/lib/validation";
@@ -27,7 +27,7 @@ export default async function JobsFilterServer({
     defaultValues.jobMode;
 
   return (
-    <div className="bg-white shadow-md rounded-xl p-8 mr-4 hidden md:block w-[400px]">
+    <div className="bg-white border border-slate-300 rounded-xl p-8 mr-4 hidden md:block w-[400px]">
       <form action={filterJobsAction} key={JSON.stringify(defaultValues)}>
         <div className="flex flex-col gap-2">
           <label htmlFor="search" className="font-medium">
@@ -102,9 +102,7 @@ export default async function JobsFilterServer({
           </Select>
         </div>
 
-        <FilterJobsButton className="rounded-xl mt-4 w-full border border-violet-600 bg-violet-600 text-white hover:bg-violet-500 px-4 transition">
-          Filter jobs
-        </FilterJobsButton>
+        <FilterJobsButton>Filter jobs</FilterJobsButton>
       </form>
       {isFilterApplied && <ClearFilters />}
     </div>

@@ -5,24 +5,19 @@ import { useState } from "react";
 
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Pagination = ({ totalPages }: any) => {
+const Pagination = ({
+  page,
+  totalPages,
+}: {
+  page: number;
+  totalPages: number;
+}) => {
   const searchParams = useSearchParams();
-  const initialPage = parseInt(searchParams.get("page") || "1", 10);
-  const [currentPage, setCurrentPage] = useState<number>(initialPage);
+  //const initialPage = parseInt(searchParams.get("page") || "1", 10);
+  const [currentPage, setCurrentPage] = useState<number>(page);
   const [jumpPage, setJumpPage] = useState<string>("");
 
   const router = useRouter();
-
-  const handleJumpSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const page = parseInt(jumpPage, 10);
-    if (!isNaN(page)) {
-      handlePageChange(page);
-    } else {
-      alert("Please enter a valid page number.");
-    }
-  };
 
   const handlePageChange = (page: number) => {
     if (page > 0 && page <= totalPages) {
@@ -33,6 +28,19 @@ const Pagination = ({ totalPages }: any) => {
       router.push(`?${newSearchParams.toString()}`);
 
       //window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const handleJumpSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const page = parseInt(jumpPage, 10);
+
+    if (!isNaN(page)) {
+      handlePageChange(page);
+      //setJumpPage("");
+    } else {
+      alert("Please enter a valid page number.");
     }
   };
 
@@ -52,7 +60,7 @@ const Pagination = ({ totalPages }: any) => {
       </button>
       <div className="flex items-center gap-2">
         <p>
-          Page {currentPage} of {totalPages}
+          Page {page} of {totalPages}
         </p>
         <form onSubmit={handleJumpSubmit} className="flex items-center gap-2">
           <input
